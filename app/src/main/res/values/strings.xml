@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyMusic</string>
+    <string name="string_search">Search</string>
+    <string name="string_download">download</string>
+    <string name="string_favorite">favorite</string>
+    <string name="String_title">Your are my sunshine</string>
+    <string name="string_singer">Your are my sunshine</string>
+    <string name="string_home">home</string>
+    <string name="string_genre_name">genres_name</string>
+    <string name="string_time">00:00</string>
 </resources>
