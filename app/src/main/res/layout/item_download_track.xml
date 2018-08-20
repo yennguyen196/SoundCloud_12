@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80">
+
+    <TextView
+        android:id="@+id/text_singer"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_25"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/string_singer"
+        app:layout_constraintStart_toEndOf="@+id/image_song"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+    <ImageView
+        android:id="@+id/image_song"
+        android:background="@color/color_pink"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_25"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/String_title"
+        app:layout_constraintStart_toEndOf="@+id/image_song"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_next"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@drawable/ic_navigate_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_32"
+        android:layout_marginRight="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="@string/string_time"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
