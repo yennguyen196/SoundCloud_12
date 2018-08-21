@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_100">
+
+    <TextView
+        android:id="@+id/text_singer"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_25"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/string_singer"
+        app:layout_constraintStart_toEndOf="@+id/image_avatar_track"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+    <ImageView
+        android:id="@+id/image_avatar_track"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:background="@color/color_pink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_25"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/String_title"
+        app:layout_constraintStart_toEndOf="@+id/image_avatar_track"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="@string/string_time"
+        app:layout_constraintEnd_toStartOf="@+id/button_more"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <ImageButton
+        android:id="@+id/button_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_35"
+        android:background="@drawable/ic_more_vert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
