@@ -30,11 +30,6 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     }
 
     @Override
-    public void searchTrackLocal(String name, TrackDataSource.onFetchDataListener<Track> listener) {
-
-    }
-
-    @Override
     public boolean deleteTrack(Track track) {
         return false;
     }

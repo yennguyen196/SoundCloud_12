@@ -10,11 +10,7 @@ public interface TrackDataSource {
      */
     interface LocalDataSource {
         void getTrackLocal(onFetchDataListener<Track> listener);
-
-        void searchTrackLocal(String name, onFetchDataListener<Track> listener);
-
         boolean deleteTrack(Track track);
-
         List<Track> getTracks();
     }
 
