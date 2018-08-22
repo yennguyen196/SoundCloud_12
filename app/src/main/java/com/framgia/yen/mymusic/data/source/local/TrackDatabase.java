@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.framgia.yen.mymusic.data.model.Track;
 
 
-public class TrackDataBase extends SQLiteOpenHelper {
+public class TrackDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "MYMUSIC";
-    private static final String TABLE_NAME = "TRACK";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String CREATE_TRACK = "CREATE TABLE " + TABLE_NAME+ "( "
-            + Track.TrackEntity.COLUMN_ID + " INTEGER NOT NULL PRIMARY KEY, "
+    private static final String SQL_CREATE_TRACK = "CREATE TABLE "
+            + Track.TrackEntity.TABLE_NAME+ "( "
+            + Track.TrackEntity.ID + " INTEGER NOT NULL PRIMARY KEY, "
             + Track.TrackEntity.TITLE + " TEXT, "
             + Track.TrackEntity.ARTIST + " TEXT, "
             + Track.TrackEntity.DURATION + " INTEGER,"
@@ -22,18 +22,16 @@ public class TrackDataBase extends SQLiteOpenHelper {
             + Track.TrackEntity.DOWNLOADABLE + " INTEGER, "
             + Track.TrackEntity.DOWNLOAD_URL + " TEXT )";
 
-    public TrackDataBase(Context context) {
+    public TrackDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TRACK);
+        db.execSQL(SQL_CREATE_TRACK);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
-
 }

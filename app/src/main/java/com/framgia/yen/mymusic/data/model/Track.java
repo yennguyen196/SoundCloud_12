@@ -133,9 +133,10 @@ public class Track implements Parcelable {
     }
 
     public static class TrackEntity{
+        public static final String TABLE_NAME = "TRACK";
         public static final String ARTWORK_URL = "mArtWorkUrl";
         public static final String DOWNLOAD_URL = "mDownloadUrl";
-        public static final String COLUMN_ID = "mId";
+        public static final String ID = "mId";
         public static final String DURATION = "mDuration";
         public static final String TITLE = "mTitle";
         public static final String LIKE_COUNT = "mLikeCount";

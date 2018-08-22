@@ -3,6 +3,7 @@ package com.framgia.yen.mymusic.data.source.local;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
 
@@ -10,13 +11,17 @@ import com.framgia.yen.mymusic.R;
 import com.framgia.yen.mymusic.data.model.Artist;
 import com.framgia.yen.mymusic.data.model.Track;
 import com.framgia.yen.mymusic.data.source.TrackDataSource;
+import com.framgia.yen.mymusic.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     private static final String QUERY_DIRECTORY_NAME = "%MySoundCloud%";
+    private static final String VOLUMN_NAME_EXTERNAL = "external";
+    public static final String DB_QUERY_EQUAL_SELECTION = " %s = ?";
     private static TrackLocalDataSource sTrackLocalDataSource;
+    private static TrackDatabase sTrackDatabase;
     private Context mContext;
 
 
@@ -39,16 +44,15 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
             return;
         }
         listener.onFetchDataSuccess(tracks);
-    }
-
-    @Override
-    public void searchTrackLocal(String name, TrackDataSource.onFetchDataListener<Track> listener) {
-
-    }
-
+}
     @Override
     public boolean deleteTrack(Track track) {
-        return false;
+        SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
+        String where = String.format(DB_QUERY_EQUAL_SELECTION, Track.TrackEntity.ID);
+        String[] selectionArgs = new String[]{String.valueOf(track.getId())};
+        database.delete(Track.TrackEntity.TABLE_NAME, where, selectionArgs );
+        database.close();
+        return true;
     }
 
     @Override
