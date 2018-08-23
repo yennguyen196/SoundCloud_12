@@ -35,6 +35,21 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     }
 
     @Override
+    public boolean deleteOfflineTrack(Track track) {
+        return false;
+    }
+
+    @Override
+    public void addTrackToFavorite(Track track) {
+
+    }
+
+    @Override
+    public void removeTrackFromFavorite(Track track) {
+
+    }
+
+    @Override
     public List<Track> getTracks() {
         return null;
     }
