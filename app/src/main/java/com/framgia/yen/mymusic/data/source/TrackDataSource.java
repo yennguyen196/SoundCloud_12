@@ -11,6 +11,9 @@ public interface TrackDataSource {
     interface LocalDataSource {
         void getTrackLocal(onFetchDataListener<Track> listener);
         boolean deleteTrack(Track track);
+        boolean deleteOfflineTrack(Track track);
+        void addTrackToFavorite(Track track);
+        void removeTrackFromFavorite(Track track);
         List<Track> getTracks();
     }
 
@@ -24,6 +27,6 @@ public interface TrackDataSource {
 
     interface onFetchDataListener<T>{
         void onFetchDataSuccess(List<T> data);
-        void onFetchDataFail(String message);
+        void onFetchDataFail(Exception exption);
     }
 }

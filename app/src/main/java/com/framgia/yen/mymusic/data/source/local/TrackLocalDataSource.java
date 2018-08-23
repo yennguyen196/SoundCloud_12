@@ -1,6 +1,7 @@
 package com.framgia.yen.mymusic.data.source.local;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,18 +9,17 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.framgia.yen.mymusic.R;
-import com.framgia.yen.mymusic.data.model.Artist;
 import com.framgia.yen.mymusic.data.model.Track;
 import com.framgia.yen.mymusic.data.source.TrackDataSource;
-import com.framgia.yen.mymusic.utils.Constants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     private static final String QUERY_DIRECTORY_NAME = "%MySoundCloud%";
     private static final String VOLUMN_NAME_EXTERNAL = "external";
-    public static final String DB_QUERY_EQUAL_SELECTION = " %s = ?";
+    private static final String DB_QUERY_EQUAL_SELECTION = " %s = ?";
     private static TrackLocalDataSource sTrackLocalDataSource;
     private static TrackDatabase sTrackDatabase;
     private Context mContext;
@@ -28,7 +28,11 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     public TrackLocalDataSource(Context context) {
         mContext = context;
     }
-
+    public static void init(Context context){
+        if(sTrackLocalDataSource == null){
+            sTrackLocalDataSource = new TrackLocalDataSource(context);
+        }
+    }
     public static TrackLocalDataSource getInstance() {
         return sTrackLocalDataSource;
     }
@@ -40,7 +44,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         String[] selectionArgs = new String[]{QUERY_DIRECTORY_NAME};
         List<Track> tracks = readData(uri, selection, selectionArgs);
         if (tracks == null) {
-            listener.onFetchDataFail(mContext.getString(R.string.mgs_load_failed));
+            listener.onFetchDataFail(new Exception(mContext.getString(R.string.mgs_load_failed)));
             return;
         }
         listener.onFetchDataSuccess(tracks);
@@ -56,12 +60,35 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     }
 
     @Override
+    public boolean deleteOfflineTrack(Track track) {
+        File file = new File(track.getUri());
+        return file.delete();
+    }
+
+    @Override
+    public void addTrackToFavorite(Track track) {
+        SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Track.TrackEntity.ID, track.getId());
+        database.insert(Track.TrackEntity.TABLE_NAME, null, contentValues);
+        database.close();
+    }
+
+    @Override
+    public void removeTrackFromFavorite(Track track) {
+        SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
+        String where = String.format(DB_QUERY_EQUAL_SELECTION, Track.TrackEntity.ID);
+        String[] selectionArgs = new String[]{String.valueOf(track.getId())};
+        database.delete(Track.TrackEntity.TABLE_NAME, where, selectionArgs);
+    }
+
+    @Override
     public List<Track> getTracks() {
         return null;
     }
 
     private List<Track> readData(Uri uri, String selection, String[] selectionArgs) {
-        ArrayList<Track> tracks = new ArrayList<>();
+        List<Track> tracks = new ArrayList<>();
         ContentResolver contentResolver = mContext.getContentResolver();
         Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.Media.ALBUM_ID},
                 selection, selectionArgs, null);
@@ -77,12 +104,10 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         while (!cursor.isAfterLast()) {
             Track track = new Track();
             track.setId(cursor.getInt(columnId));
-            Artist artist = new Artist();
-            artist.setName(cursor.getString(columnArtist));
-            track.setArtist(artist);
+            track.setArtist(cursor.getString(columnArtist));
             track.setDuration(cursor.getInt(columnDuration));
             track.setUri(cursor.getString(columnFilePath));
-            track.setTitile(cursor.getString(columnTitle));
+            track.setTitle(cursor.getString(columnTitle));
             tracks.add(track);
             cursor.moveToNext();
         }

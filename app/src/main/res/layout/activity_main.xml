@@ -6,33 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:layout_marginTop="@dimen/dp_55"
-        android:background="@color/color_pink"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_item_home"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/string_home" />
+            android:background="@color/color_pink"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tap_item_download"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/string_download" />
+            android:background="@color/color_pink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+            app:tabIndicatorColor="@color/color_accent">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tap_item_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/string_favorite" />
-    </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_item_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_home" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tap_item_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_download" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tap_item_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_favorite" />
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint_playing"
@@ -43,21 +58,22 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/text_singer"
-            android:layout_width="@dimen/dp_150"
+            android:id="@+id/text_artist"
+            android:layout_width="@dimen/dp_145"
             android:layout_height="@dimen/dp_35"
             android:layout_marginEnd="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_8"
             android:layout_marginStart="@dimen/dp_4"
             android:layout_marginTop="@dimen/dp_35"
+            android:singleLine="true"
             android:text="@string/string_singer"
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_15"
-            android:gravity="center"
+            android:textStyle="italic"
             app:layout_constraintEnd_toStartOf="@+id/button_previous"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/image_song"
+            app:layout_constraintStart_toEndOf="@+id/image_track"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.constraint.Guideline
@@ -65,28 +81,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/dp_225"
-            app:layout_constraintStart_toEndOf="@id/text_title" />
+            app:layout_constraintGuide_begin="205dp"
+            app:layout_constraintStart_toEndOf="@id/text_track" />
 
         <TextView
-            android:id="@+id/text_title"
-            android:layout_width="@dimen/dp_150"
+            android:id="@+id/text_track"
+            android:layout_width="@dimen/dp_145"
             android:layout_height="@dimen/dp_35"
-            android:layout_marginEnd="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_4"
-            android:layout_marginRight="@dimen/dp_8"
             android:layout_marginStart="@dimen/dp_4"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:singleLine="true"
             android:text="@string/String_title"
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_15"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guide_line"
-            app:layout_constraintStart_toEndOf="@+id/image_song"
+            app:layout_constraintStart_toEndOf="@+id/image_track"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/image_song"
+            android:id="@+id/image_track"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginLeft="@dimen/dp_8"
@@ -107,10 +121,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guide_line"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="ContentDescription" />
 
         <ImageButton
-            android:id="@+id/button_pause"
+            android:id="@+id/button_play_pause"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:layout_marginBottom="@dimen/dp_8"
@@ -125,33 +140,26 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
-            android:id="@+id/button_next"
+            android:id="@+id/button_option"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_16"
             android:background="@drawable/ic_skip_next_black_24dp"
-            app:layout_constraintStart_toEndOf="@+id/button_pause"
+            app:layout_constraintStart_toEndOf="@+id/button_play_pause"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@color/color_pink"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_genres"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_380"
+        android:layout_height="@dimen/dp_390"
         app:layout_constraintBottom_toTopOf="@+id/constraint_playing"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="NotSibling" />
+
 
 </android.support.constraint.ConstraintLayout>
