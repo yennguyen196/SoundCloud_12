@@ -34,5 +34,7 @@
     <dimen name="dp_190">190dp</dimen>
     <dimen name="dp_95">95dp</dimen>
     <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_145">145dp</dimen>
+    <dimen name="dp_390">390dp</dimen>
 
 </resources>
