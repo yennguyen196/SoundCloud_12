@@ -125,7 +125,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
-            android:id="@+id/button_next"
+            android:id="@+id/button_option"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_marginLeft="@dimen/dp_12"

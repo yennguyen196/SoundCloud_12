@@ -24,23 +24,24 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     private static TrackDatabase sTrackDatabase;
     private Context mContext;
 
-
-    public TrackLocalDataSource(Context context) {
-        mContext = context;
+    private TrackLocalDataSource(Context context) {
+        this.mContext = context;
     }
-    public static void init(Context context){
-        if(sTrackLocalDataSource == null){
+
+    public static void init(Context context) {
+        if (sTrackLocalDataSource == null) {
             sTrackLocalDataSource = new TrackLocalDataSource(context);
         }
     }
+
     public static TrackLocalDataSource getInstance() {
         return sTrackLocalDataSource;
     }
 
     @Override
-    public void getTrackLocal(TrackDataSource.onFetchDataListener<Track> listener) {
+    public void getTrackLocal(TrackDataSource.OnFetchDataListener<Track> listener) {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.DATA;
+        String selection = MediaStore.Audio.Media.DATA + " LIKE ?";
         String[] selectionArgs = new String[]{QUERY_DIRECTORY_NAME};
         List<Track> tracks = readData(uri, selection, selectionArgs);
         if (tracks == null) {
@@ -48,13 +49,14 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
             return;
         }
         listener.onFetchDataSuccess(tracks);
-}
+    }
+
     @Override
     public boolean deleteTrack(Track track) {
         SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
         String where = String.format(DB_QUERY_EQUAL_SELECTION, Track.TrackEntity.ID);
         String[] selectionArgs = new String[]{String.valueOf(track.getId())};
-        database.delete(Track.TrackEntity.TABLE_NAME, where, selectionArgs );
+        database.delete(Track.TrackEntity.TABLE_NAME, where, selectionArgs);
         database.close();
         return true;
     }
@@ -90,7 +92,11 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     private List<Track> readData(Uri uri, String selection, String[] selectionArgs) {
         List<Track> tracks = new ArrayList<>();
         ContentResolver contentResolver = mContext.getContentResolver();
-        Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.Media.ALBUM_ID},
+        Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.Media.ALBUM_ID,
+                        MediaStore.Audio.Media.TITLE,
+                        MediaStore.Audio.Media._ID,
+                        MediaStore.Audio.Media.DATA,
+                        MediaStore.Audio.Media.ARTIST},
                 selection, selectionArgs, null);
         if (cursor == null) {
             return null;

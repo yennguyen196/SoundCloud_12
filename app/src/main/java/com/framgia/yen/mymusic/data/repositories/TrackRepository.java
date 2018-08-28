@@ -4,7 +4,8 @@ import com.framgia.yen.mymusic.data.model.Track;
 import com.framgia.yen.mymusic.data.source.TrackDataSource;
 import com.framgia.yen.mymusic.data.source.TrackDataSource.LocalDataSource;
 import com.framgia.yen.mymusic.data.source.TrackDataSource.RemoteDataSource;
-
+import com.framgia.yen.mymusic.data.source.local.TrackLocalDataSource;
+import com.framgia.yen.mymusic.data.source.remote.TrackRemoteDataSource;
 import java.util.List;
 
 public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDataSource.RemoteDataSource {
@@ -17,16 +18,17 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
         mRemoteDataSource = remoteDataSource;
     }
 
-    private TrackRepository getInstance() {
+    public static TrackRepository getInstance() {
         if (sTrackRepository == null) {
-            sTrackRepository = new TrackRepository(mLocalDataSource, mRemoteDataSource);
+            sTrackRepository = new TrackRepository(TrackLocalDataSource.getInstance(),
+                    TrackRemoteDataSource.getInstance());
         }
         return sTrackRepository;
     }
 
     @Override
-    public void getTrackLocal(TrackDataSource.onFetchDataListener<Track> listener) {
-
+    public void getTrackLocal(TrackDataSource.OnFetchDataListener<Track> listener) {
+        mLocalDataSource.getTrackLocal(listener);
     }
 
     @Override
@@ -55,12 +57,12 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     }
 
     @Override
-    public void getTrackRemote(String genre, int limit, int offset, TrackDataSource.onFetchDataListener<Track> listener) {
-
+    public void getTrackRemote(String genre, int limit, int offset, TrackDataSource.OnFetchDataListener<Track> listener) {
+        TrackRemoteDataSource.getInstance().getTrackRemote(genre, limit, offset, listener);
     }
 
     @Override
-    public void serchTrackRemote(String name, int offset, TrackDataSource.onFetchDataListener<Track> listener) {
+    public void serchTrackRemote(String name, int offset, TrackDataSource.OnFetchDataListener<Track> listener) {
 
     }
 }
