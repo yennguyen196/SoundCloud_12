@@ -13,12 +13,12 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/string_singer"
-        app:layout_constraintStart_toEndOf="@+id/image_avatar_track"
-        app:layout_constraintTop_toBottomOf="@+id/text_track" />
+        android:text="@string/singer"
+        app:layout_constraintStart_toEndOf="@+id/image_track"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <ImageView
-        android:id="@+id/image_avatar_track"
+        android:id="@+id/image_track"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
         android:layout_marginTop="@dimen/dp_8"
@@ -29,14 +29,14 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/text_track"
+        android:id="@+id/text_title"
         android:layout_width="@dimen/dp_130"
         android:layout_height="@dimen/dp_25"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/String_title"
-        app:layout_constraintStart_toEndOf="@+id/image_avatar_track"
+        android:text="@string/title"
+        app:layout_constraintStart_toEndOf="@+id/image_track"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -46,7 +46,7 @@
         android:layout_marginEnd="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_40"
-        android:text="@string/string_time"
+        android:text="@string/title_time"
         app:layout_constraintEnd_toStartOf="@+id/button_more"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />

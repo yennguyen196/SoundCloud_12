@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_download"
-        android:title="@string/string_download"/>
+        android:title="@string/download"/>
     <item
         android:id="@+id/action_add_to_favorite"
-        android:title="@string/string_add_to_favorite"/>
+        android:title="@string/action_add_to_favorite"/>
 </menu>
