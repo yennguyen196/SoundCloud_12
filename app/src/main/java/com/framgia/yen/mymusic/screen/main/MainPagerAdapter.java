@@ -44,14 +44,14 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title = "";
         switch (position) {
-            case 0:
-                title = mContext.getString(R.string.title_home);
+            case TabEntity.TAB_HOME:
+                title = mContext.getString(R.string.home);
                 break;
-            case 1:
-                title = mContext.getString(R.string.string_download);
+            case TabEntity.TAB_DOWNLOAD:
+                title = mContext.getString(R.string.download);
                 break;
-            case 2:
-                title = mContext.getString(R.string.title_favorite);
+            case TabEntity.TAB_FAVORITE:
+                title = mContext.getString(R.string.favorite);
                 break;
         }
         return title;

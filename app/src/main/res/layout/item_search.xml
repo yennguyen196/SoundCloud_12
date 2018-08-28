@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/dp_100"
         android:layout_marginRight="@dimen/dp_100"
         android:layout_marginTop="@dimen/dp_35"
-        android:text="@string/String_title"
+        android:text="@string/title"
         android:gravity="bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

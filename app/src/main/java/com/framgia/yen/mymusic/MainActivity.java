@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mTextViewArtist = findViewById(R.id.text_artist);
         mButtonPrevious = findViewById(R.id.button_previous);
         mButtonChangeState = findViewById(R.id.button_play_pause);
-        mButtonNext = findViewById(R.id.button_option);
+        mButtonNext = findViewById(R.id.button_next);
 
         mButtonNext.setOnClickListener(this);
         mButtonChangeState.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_option:
+            case R.id.button_next:
                 //todo
             case R.id.button_play_pause:
                 //todo

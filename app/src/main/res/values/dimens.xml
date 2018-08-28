@@ -36,5 +36,6 @@
     <dimen name="dp_75">75dp</dimen>
     <dimen name="dp_145">145dp</dimen>
     <dimen name="dp_390">390dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
 
 </resources>

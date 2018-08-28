@@ -43,7 +43,7 @@
         android:layout_marginLeft="@dimen/dp_12"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/string_search"
+        android:text="@string/action_search"
         app:layout_constraintStart_toEndOf="@+id/button_back"
         app:layout_constraintTop_toTopOf="parent" />
 

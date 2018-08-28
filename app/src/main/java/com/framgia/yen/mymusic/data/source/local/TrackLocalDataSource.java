@@ -44,7 +44,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         String[] selectionArgs = new String[]{QUERY_DIRECTORY_NAME};
         List<Track> tracks = readData(uri, selection, selectionArgs);
         if (tracks == null) {
-            listener.onFetchDataFail(new Exception(mContext.getString(R.string.mgs_load_failed)));
+            listener.onFetchDataFail(new Exception(mContext.getString(R.string.msg_load_failed)));
             return;
         }
         listener.onFetchDataSuccess(tracks);

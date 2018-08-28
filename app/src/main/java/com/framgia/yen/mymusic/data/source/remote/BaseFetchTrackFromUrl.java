@@ -73,7 +73,6 @@ public class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List<Track>> 
             int download_count = jsonObject.optInt(TrackEntity.DOWNLOAD_COUNT);
             JSONObject metadataObject = jsonObject.optJSONObject(TrackEntity.PUBLISHER_METADATA);
             String artist = metadataObject.optString(TrackEntity.ARTIST);
-
             Track track = new Track(id, duration, title, artworkUrl, downloadUrl, likeCount, downloadable, uri, genre, artist, download_count);
             tracks.add(track);
         }
