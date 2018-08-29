@@ -1,16 +1,19 @@
 package com.framgia.yen.mymusic.screen.main.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.framgia.yen.mymusic.R;
 import com.framgia.yen.mymusic.data.model.Genre;
@@ -25,21 +28,25 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
     private Context mContext;
     private HomeContract.Presenter mPresent;
     private GenreAdapter mGenreAdapter;
-    private static HomeFragment mInstance;
+    private static HomeFragment sInstance;
     private RecyclerView mRecyclerView;
-    private GenreDetailFragment detailFragment;
+    private GenreDetailFragment mDetailFragment;
+    private Toolbar mToolbar;
+    private ImageButton mImageButtonSearch;
 
-    public HomeFragment(){}
+    public HomeFragment() {
+    }
 
     /**
      * singleton pattern
+     *
      * @return
      */
-    public static HomeFragment getInstance(){
-        if(mInstance == null){
-            mInstance = new HomeFragment();
+    public static HomeFragment getInstance() {
+        if (sInstance == null) {
+            sInstance = new HomeFragment();
         }
-        return mInstance;
+        return sInstance;
     }
 
     @Nullable
@@ -48,7 +55,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
                              @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, null, false);
         mRecyclerView = view.findViewById(R.id.recycler_genres);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
         mGenreAdapter = new GenreAdapter(getContext(), null);
         mRecyclerView.setAdapter(mGenreAdapter);
         mGenreAdapter.setOnGenreClickListener(this);
@@ -64,9 +71,23 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
 
     @Override
     public void gotoDetailFragment(String genre) {
-        if (detailFragment == null) {
-            detailFragment = GenreDetailFragment.getInstance(genre);
+        if (mDetailFragment == null) {
+            mDetailFragment = GenreDetailFragment.getInstance(genre);
         }
         getContext().startActivity(GenreDetailActivity.newInstance(getContext(), genre));
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.menu, menu);
+        mImageButtonSearch = (ImageButton) menu.findItem(R.id.action_search);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        mImageButtonSearch = (ImageButton) menu.findItem(R.id.action_search);
+        super.onPrepareOptionsMenu(menu);
+    }
+
 }
