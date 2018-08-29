@@ -20,6 +20,8 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     private List<Genre> genres;
     private Context mContext;
     private OnGenreClickListener mListener;
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 200;
 
     public GenreAdapter(Context context, List<Genre> genres) {
         mContext = context;
@@ -58,7 +60,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
             mTextViewGenre.setText(genre.getName());
             Glide.with(mImageViewGenre)
                     .load(genre.getImageResource())
-                    .apply(new RequestOptions().override(100, 100)
+                    .apply(new RequestOptions().override(WIDTH, HEIGHT)
                             .placeholder(R.drawable.ic_launcher_background)
                             .error(R.drawable.ic_launcher_background))
                     .into(mImageViewGenre);

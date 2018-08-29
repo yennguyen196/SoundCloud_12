@@ -8,10 +8,11 @@
     <View
         android:id="@+id/view_search"
         android:layout_width="wrap_content"
-        android:background="@color/color_pink"
         android:layout_height="@dimen/dp_75"
+        android:background="@color/color_green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/button_search"
         android:layout_width="@dimen/dp_30"
@@ -50,8 +51,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_search"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_480"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_search" />
 
