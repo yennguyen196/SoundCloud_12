@@ -50,7 +50,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
 
         private ViewHolder(View view) {
             super(view);
-            mImageViewGenre = view.findViewById(R.id.imageView_genre);
+            mImageViewGenre = view.findViewById(R.id.image_genre);
             mTextViewGenre = view.findViewById(R.id.text_genre);
         }
 
@@ -62,6 +62,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
                             .placeholder(R.drawable.ic_launcher_background)
                             .error(R.drawable.ic_launcher_background))
                     .into(mImageViewGenre);
+            mImageViewGenre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.gotoDetailFragment(genre.getName());
+                }
+            });
         }
     }
 

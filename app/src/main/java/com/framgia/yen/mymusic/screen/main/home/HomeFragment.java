@@ -1,6 +1,7 @@
 package com.framgia.yen.mymusic.screen.main.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.framgia.yen.mymusic.R;
 import com.framgia.yen.mymusic.data.model.Genre;
 import com.framgia.yen.mymusic.data.repositories.GenresRepository;
 import com.framgia.yen.mymusic.data.source.local.GenresLocalDataSource;
+import com.framgia.yen.mymusic.screen.main.genredetail.GenreDetailActivity;
 import com.framgia.yen.mymusic.screen.main.genredetail.GenreDetailFragment;
 
 import java.util.List;
@@ -65,9 +67,6 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
         if (detailFragment == null) {
             detailFragment = GenreDetailFragment.getInstance(genre);
         }
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.recycler_genres, detailFragment)
-                .addToBackStack(null)
-                .commit();
+        getContext().startActivity(GenreDetailActivity.newInstance(getContext(), genre));
     }
 }

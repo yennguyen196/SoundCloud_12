@@ -9,7 +9,7 @@ public interface TrackDataSource {
      * local data
      */
     interface LocalDataSource {
-        void getTrackLocal(onFetchDataListener<Track> listener);
+        void getTrackLocal(OnFetchDataListener<Track> listener);
         boolean deleteTrack(Track track);
         boolean deleteOfflineTrack(Track track);
         void addTrackToFavorite(Track track);
@@ -21,11 +21,11 @@ public interface TrackDataSource {
      * remote data
      */
     interface RemoteDataSource {
-        void getTrackRemote(String genre, int limit, int offset, onFetchDataListener<Track> listener);
-        void serchTrackRemote(String name, int offset, onFetchDataListener<Track> listener);
+        void getTrackRemote(String genre, int limit, int offset, OnFetchDataListener<Track> listener);
+        void serchTrackRemote(String name, int offset, OnFetchDataListener<Track> listener);
     }
 
-    interface onFetchDataListener<T>{
+    interface OnFetchDataListener<T>{
         void onFetchDataSuccess(List<T> data);
         void onFetchDataFail(Exception exption);
     }

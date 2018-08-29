@@ -19,11 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List<Track>> {
+    public static final String UNKNOWN = "<unknown>";
     private static final String GET = "GET";
     private Exception mException;
-    private TrackDataSource.onFetchDataListener<Track> mListener;
+    private TrackDataSource.OnFetchDataListener<Track> mListener;
 
-    private BaseFetchTrackFromUrl(TrackDataSource.onFetchDataListener<Track> listener) {
+    public BaseFetchTrackFromUrl(TrackDataSource.OnFetchDataListener<Track> listener) {
         mListener = listener;
     }
 
@@ -71,9 +72,13 @@ public class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List<Track>> 
             String title = jsonObject.optString(TrackEntity.TITLE);
             String uri = jsonObject.optString(TrackEntity.URI);
             int download_count = jsonObject.optInt(TrackEntity.DOWNLOAD_COUNT);
+            String artist = null;
             JSONObject metadataObject = jsonObject.optJSONObject(TrackEntity.PUBLISHER_METADATA);
-            String artist = metadataObject.optString(TrackEntity.ARTIST);
-            Track track = new Track(id, duration, title, artworkUrl, downloadUrl, likeCount, downloadable, uri, genre, artist, download_count);
+            if(metadataObject != null){
+                artist = metadataObject.optString(TrackEntity.ARTIST, UNKNOWN);
+            }
+            Track track = new Track(id, duration, title, artworkUrl, downloadUrl,
+                    likeCount, downloadable, uri, genre, artist, download_count);
             tracks.add(track);
         }
         return tracks;
@@ -87,7 +92,7 @@ public class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List<Track>> 
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            stringBuilder.append(line);
+            stringBuilder.append(line).append("\n");
         }
         bufferedReader.close();
         connection.disconnect();

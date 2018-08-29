@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mTabLayout = findViewById(R.id.tab_layout);
         mViewPager = findViewById(R.id.view_pager_genres);
         mImageViewTrack = findViewById(R.id.image_track);
-        mTextViewTitle = findViewById(R.id.text_track);
+        mTextViewTitle = findViewById(R.id.text_title);
         mTextViewArtist = findViewById(R.id.text_artist);
         mButtonPrevious = findViewById(R.id.button_previous);
         mButtonChangeState = findViewById(R.id.button_play_pause);
-        mButtonNext = findViewById(R.id.button_next);
+        mButtonNext = findViewById(R.id.button_option);
 
         mButtonNext.setOnClickListener(this);
         mButtonChangeState.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_next:
+            case R.id.button_option:
                 //todo
             case R.id.button_play_pause:
                 //todo
