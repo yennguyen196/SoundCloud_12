@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyMusic</string>
+    <string name="action_search">Search</string>
+    <string name="download">download</string>
+    <string name="title">Hello</string>
+    <string name="singer">Singer</string>
+    <string name="genre_name">genres name</string>
+    <string name="title_time">00:00</string>
+    <string name="msg_download_failed">Download Failed</string>
+    <string name="msg_load_failed">load failed</string>
+    <string name="action_add_to_favorite">Add to favorite</string>
+    <string name="title_search">Search...</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="unknown_artist">Unknown Artist</string>
+</resources>
