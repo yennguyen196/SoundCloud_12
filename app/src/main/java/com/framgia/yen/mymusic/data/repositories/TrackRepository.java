@@ -6,12 +6,14 @@ import com.framgia.yen.mymusic.data.source.TrackDataSource.LocalDataSource;
 import com.framgia.yen.mymusic.data.source.TrackDataSource.RemoteDataSource;
 import com.framgia.yen.mymusic.data.source.local.TrackLocalDataSource;
 import com.framgia.yen.mymusic.data.source.remote.TrackRemoteDataSource;
+
 import java.util.List;
 
 public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDataSource.RemoteDataSource {
     private static TrackRepository sTrackRepository;
     private LocalDataSource mLocalDataSource;
     private RemoteDataSource mRemoteDataSource;
+    private List<Track> mTracks;
 
     private TrackRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
         mLocalDataSource = localDataSource;
@@ -32,6 +34,13 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     }
 
     @Override
+    public void getTrackOfflineInFolder(String folderName, TrackDataSource.OnFetchDataListener<Track> listener) {
+        if (mLocalDataSource != null) {
+            mLocalDataSource.getTrackOfflineInFolder(folderName, listener);
+        }
+    }
+
+    @Override
     public boolean deleteTrack(Track track) {
         return false;
     }
@@ -43,7 +52,12 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
 
     @Override
     public void addTrackToFavorite(Track track) {
+        mLocalDataSource.addTrackToFavorite(track);
+    }
 
+    @Override
+    public List<Track> getTracksFavorite() {
+        return mLocalDataSource.getTracksFavorite();
     }
 
     @Override

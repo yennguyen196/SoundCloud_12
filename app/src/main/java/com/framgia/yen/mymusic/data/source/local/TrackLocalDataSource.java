@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
-    private static final String QUERY_DIRECTORY_NAME = "%MySoundCloud%";
-    private static final String VOLUMN_NAME_EXTERNAL = "external";
+    private static final String QUERY_DIRECTORY_NAME = "%SoundCloud12%";
+    private static final String DB_SORT_COLUMN_ASC = "%s ASC";
     private static final String DB_QUERY_EQUAL_SELECTION = " %s = ?";
     private static TrackLocalDataSource sTrackLocalDataSource;
     private static TrackDatabase sTrackDatabase;
@@ -26,6 +26,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
 
     private TrackLocalDataSource(Context context) {
         this.mContext = context;
+        sTrackDatabase = TrackDatabase.getInstance(context);
     }
 
     public static void init(Context context) {
@@ -52,6 +53,44 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     }
 
     @Override
+    public void getTrackOfflineInFolder(String folderName, TrackDataSource.OnFetchDataListener<Track> listener) {
+        List<Track> tracks = new ArrayList<>();
+        ContentResolver contentResolver = mContext.getContentResolver();
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = new String[]{
+              MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.DATA
+        };
+        String sortByTitleAscending = String.format(DB_SORT_COLUMN_ASC,
+                MediaStore.Audio.Media.TITLE);
+        Cursor cursor = contentResolver.query(uri, projection, null, null, sortByTitleAscending);
+
+        if(cursor == null){
+            listener.onFetchDataFail(new Exception(mContext.getString(Integer.parseInt("Cant load track"))));
+            return;
+        }
+        while (cursor.moveToNext()){
+            Track track = getTrackFromCusor(cursor);
+            tracks.add(track);
+        }
+        cursor.close();
+        listener.onFetchDataSuccess(tracks);
+    }
+
+    private Track getTrackFromCusor(Cursor cursor) {
+        Track track = new Track();
+        track.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+        track.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+        track.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+        track.setDuration(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
+        track.setUri(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        return track;
+    }
+
+    @Override
     public boolean deleteTrack(Track track) {
         SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
         String where = String.format(DB_QUERY_EQUAL_SELECTION, Track.TrackEntity.ID);
@@ -72,8 +111,18 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         SQLiteDatabase database = sTrackDatabase.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Track.TrackEntity.ID, track.getId());
+        contentValues.put(Track.TrackEntity.TITLE, track.getTitle());
+        contentValues.put(Track.TrackEntity.ARTIST, track.getArtist());
+        contentValues.put(Track.TrackEntity.ARTWORK_URL, track.getArtWorkUrl());
+        contentValues.put(Track.TrackEntity.DURATION, track.getDuration());
         database.insert(Track.TrackEntity.TABLE_NAME, null, contentValues);
         database.close();
+    }
+
+    @Override
+    public List<Track> getTracksFavorite() {
+        //TODO
+        return null;
     }
 
     @Override
