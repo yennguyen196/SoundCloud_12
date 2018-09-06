@@ -33,6 +33,7 @@
     <TextView
         android:id="@+id/text_title"
         android:layout_width="0dp"
+
         android:layout_height="@dimen/dp_25"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
