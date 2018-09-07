@@ -11,6 +11,7 @@ public class StringUtil {
     private static final String CLIENT_ID = "client_id";
     private static final String LIMIT = "limit";
     private static final String OFFSET = "offset";
+    private static final String STREAM = "stream";
 
     public static String formatTrackUrl(String genre, int limit, int offSet) {
         return String.format(TRACK_QUERY_FORMAT, BASE_URL,
@@ -23,4 +24,9 @@ public class StringUtil {
                 TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
     }
+    public static String formatTrackStreamURL(String uri) {
+        return String.format("%s/%s?%s=%s", uri, STREAM,
+                CLIENT_ID, BuildConfig.API_KEY);
+    }
+
 }

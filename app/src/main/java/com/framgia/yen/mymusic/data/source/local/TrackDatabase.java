@@ -13,6 +13,10 @@ public class TrackDatabase extends SQLiteOpenHelper {
     private static TrackDatabase sInstance;
     private Context mCOntext;
 
+    public TrackDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
     public static TrackDatabase getInstance(Context context) {
         if(sInstance == null) {
             sInstance = new TrackDatabase(context);

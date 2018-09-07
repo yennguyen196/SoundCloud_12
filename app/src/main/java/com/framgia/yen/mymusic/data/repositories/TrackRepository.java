@@ -41,6 +41,13 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     }
 
     @Override
+    public void getTrackOfflineInFolder(String folderName, TrackDataSource.OnFetchDataListener<Track> listener) {
+        if (mLocalDataSource != null) {
+            mLocalDataSource.getTrackOfflineInFolder(folderName, listener);
+        }
+    }
+
+    @Override
     public boolean deleteTrack(Track track) {
         return false;
     }
@@ -64,7 +71,6 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
     public void removeTrackFromFavorite(Track track) {
 
     }
-
     @Override
     public List<Track> getTracks() {
         return null;
