@@ -25,10 +25,8 @@
         <activity
             android:name=".screen.main.playmusic.PlayTrackActivity"
             android:launchMode="singleTop" />
-
         <service
             android:name=".service.TrackService"
             android:enabled="true" />
     </application>
-
 </manifest>

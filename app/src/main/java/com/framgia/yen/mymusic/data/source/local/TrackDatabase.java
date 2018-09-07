@@ -6,10 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.framgia.yen.mymusic.data.model.Track;
 
-
 public class TrackDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "MYMUSIC";
     private static final int DATABASE_VERSION = 1;
+    public static final String TABLE_NAME_FAVORITE = "favorite";
+    private static TrackDatabase sInstance;
+    private Context mCOntext;
+
+    public static TrackDatabase getInstance(Context context) {
+        if(sInstance == null) {
+            sInstance = new TrackDatabase(context);
+        }
+        return sInstance;
+    }
 
     private static final String SQL_CREATE_TRACK = "CREATE TABLE "
             + Track.TrackEntity.TABLE_NAME+ "( "
@@ -22,6 +31,11 @@ public class TrackDatabase extends SQLiteOpenHelper {
             + Track.TrackEntity.DOWNLOADABLE + " INTEGER, "
             + Track.TrackEntity.DOWNLOAD_URL + " TEXT )";
 
+    private static final String SQL_CREATE_FAVORITE_ENTRIES =
+            "CREATE TABLE "
+                    + Track.TrackEntity.TABLE_NAME+ "( "
+                    + Track.TrackEntity.ID + " INTEGER NOT NULL)";
+
     public TrackDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -29,6 +43,7 @@ public class TrackDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TRACK);
+       db.execSQL(SQL_CREATE_FAVORITE_ENTRIES);
     }
 
     @Override

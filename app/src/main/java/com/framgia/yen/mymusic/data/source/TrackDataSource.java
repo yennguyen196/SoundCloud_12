@@ -10,9 +10,11 @@ public interface TrackDataSource {
      */
     interface LocalDataSource {
         void getTrackLocal(OnFetchDataListener<Track> listener);
+        void getTrackOfflineInFolder(String folderName, OnFetchDataListener<Track> listener);
         boolean deleteTrack(Track track);
         boolean deleteOfflineTrack(Track track);
         void addTrackToFavorite(Track track);
+        List<Track> getTracksFavorite();
         void removeTrackFromFavorite(Track track);
         List<Track> getTracks();
     }

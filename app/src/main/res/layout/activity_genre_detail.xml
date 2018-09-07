@@ -19,7 +19,31 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_genre_name"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -30,6 +54,7 @@
         android:background="@color/color_green"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints"
+        android:visibility="gone"
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
@@ -103,7 +128,6 @@
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/sp_15"
-
             android:background="@drawable/ic_skip_next_black_24dp"
             app:layout_constraintStart_toEndOf="@+id/button_play_pause"
             app:layout_constraintTop_toTopOf="parent"
@@ -120,8 +144,6 @@
             app:layout_constraintStart_toStartOf="@+id/guide_line"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.888" />
-
-
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView

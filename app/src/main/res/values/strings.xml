@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyMusic</string>
     <string name="action_search">Search</string>
-    <string name="download">download</string>
+    <string name="download">Download</string>
     <string name="title">Hello</string>
     <string name="singer">Singer</string>
     <string name="genre_name">genres name</string>
@@ -13,5 +13,13 @@
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="unknown_artist">Unknown Artist</string>
+    <string name="channel_id">my_package_channel_1</string>
+    <string name="channel_name">my_package_channel</string>
+    <string name="channel_description">my_package_first_channel</string>
+    <string name="delete">Delete</string>
+    <string name="play">Play</string>
+    <string name="msg_downloading">downloading</string>
+    <string name="track_name">Track Name</string>
+    <string name="http">https</string>
 
 </resources>
