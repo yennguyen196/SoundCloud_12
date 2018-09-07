@@ -1,7 +1,11 @@
 package com.framgia.yen.mymusic;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -9,15 +13,24 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.framgia.yen.mymusic.data.model.Track;
+import com.framgia.yen.mymusic.screen.TrackListener;
 import com.framgia.yen.mymusic.screen.main.MainPagerAdapter;
+import com.framgia.yen.mymusic.screen.main.genredetail.GenreDetailContract;
+import com.framgia.yen.mymusic.screen.main.playmusic.PlayTrackActivity;
+import com.framgia.yen.mymusic.service.TrackPlayerController;
+import com.framgia.yen.mymusic.service.TrackService;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,
-        View.OnClickListener, SearchView.OnQueryTextListener {
+        View.OnClickListener, SearchView.OnQueryTextListener, TrackListener, GenreDetailContract.View {
     private static int OFF_SCREEN_LIMIT = 3;
     private ConstraintLayout mConstraintLayout;
     private Toolbar mToolbar;
@@ -31,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ImageButton mButtonNext;
     private TextView mToolBarTitle;
     private MainPagerAdapter mMainPagerAdapter;
+    private TrackService mService;
+    private boolean mBound;
+    private TrackPlayerController.TrackInfoListener mTrackInfoListener;
+    private Track mCurrentTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +57,47 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setupUI();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, TrackService.class);
+        bindService(intent, mConnection, BIND_AUTO_CREATE);
+    }
+
+    public ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBound = true;
+            mService = ((TrackService.LocalBinder) service).getService();
+            mService.setTrackInfoListener(new TrackPlayerController.TrackInfoListener() {
+                @Override
+                public void onTrackChanged(Track track) {
+                    updateTrackInfor(track);
+                }
+
+                @Override
+                public void onStateChanged(int state) {
+                    updateStateInfor(state);
+                }
+
+                @Override
+                public void onLoopChanged(int loopType) {
+                }
+
+                @Override
+                public void onShuffleChanged(int shuffleMode) {
+                }
+            });
+            updateStateInfor(mService.getMediaState());
+            updateTrackInfor(mService.getCurrentTrack());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            mService.setTrackInfoListener(null);
+        }
+    };
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -103,5 +161,57 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    private void gotoPlayTrackActivity() {
+        Intent intent = new Intent(this, PlayTrackActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void download(Track track) {
+
+    }
+
+    @Override
+    public void addToFavorite(Track track) {
+
+    }
+
+    @Override
+    public void onPlayTrack(int position, List<Track> tracks) {
+        if (tracks == null) return;
+        handlePlayTracks(position, tracks.toArray(new Track[tracks.size()]));
+    }
+
+    private void handlePlayTracks(int position, Track... tracks) {
+        if (mService == null) return;
+        mService.playTrackAtPosition(position, tracks);
+        startService(new Intent(this, TrackService.class));
+        startActivity(new Intent(this, PlayTrackActivity.class));
+    }
+
+    @Override
+    public void showTracks(List<Track> tracks) {
+    }
+
+    @Override
+    public void updateTrackInfor(Track track) {
+
+    }
+
+    @Override
+    public void updateStateInfor(int state) {
+
+    }
+
+    @Override
+    public void noTrackAvailable() {
+
+    }
+
+    @Override
+    public void showLoadingTrackError() {
+
     }
 }
