@@ -25,6 +25,7 @@ import com.framgia.yen.mymusic.screen.main.genredetail.GenreDetailFragment;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View, GenreAdapter.OnGenreClickListener {
+    private static final int NUM_COLUMN  = 2;
     private Context mContext;
     private HomeContract.Presenter mPresent;
     private GenreAdapter mGenreAdapter;
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
                              @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, null, false);
         mRecyclerView = view.findViewById(R.id.recycler_genres);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, NUM_COLUMN));
         mGenreAdapter = new GenreAdapter(getContext(), null);
         mRecyclerView.setAdapter(mGenreAdapter);
         mGenreAdapter.setOnGenreClickListener(this);
@@ -89,5 +90,4 @@ public class HomeFragment extends Fragment implements HomeContract.View, GenreAd
         mImageButtonSearch = (ImageButton) menu.findItem(R.id.action_search);
         super.onPrepareOptionsMenu(menu);
     }
-
 }

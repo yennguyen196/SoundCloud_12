@@ -39,10 +39,21 @@ public class GenreDetailFragment extends Fragment implements GenreDetailContract
     }
 
     @Override
+    public void updateTrackInfor(Track track) {
+
+    }
+
+    @Override
+    public void updateStateInfor(int state) {
+
+    }
+
+    @Override
     public void noTrackAvailable() {
     }
 
     @Override
     public void showLoadingTrackError() {
     }
+
 }

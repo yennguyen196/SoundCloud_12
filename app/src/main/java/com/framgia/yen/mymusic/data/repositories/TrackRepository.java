@@ -30,7 +30,14 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
 
     @Override
     public void getTrackLocal(TrackDataSource.OnFetchDataListener<Track> listener) {
-        mLocalDataSource.getTrackLocal(listener);
+            mLocalDataSource.getTrackLocal(listener);
+    }
+
+    @Override
+    public void getTrackOfflineInFolder(String folderName, TrackDataSource.OnFetchDataListener<Track> listener) {
+        if (mLocalDataSource != null ) {
+            mLocalDataSource.getTrackOfflineInFolder(folderName, listener);
+        }
     }
 
     @Override
