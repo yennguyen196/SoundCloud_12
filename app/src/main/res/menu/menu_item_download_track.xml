@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_play_offline"
+        android:title="@string/play"/>
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/delete"/>
+</menu>

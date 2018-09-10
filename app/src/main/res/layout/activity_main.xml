@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_70"
         android:background="@color/color_green"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
