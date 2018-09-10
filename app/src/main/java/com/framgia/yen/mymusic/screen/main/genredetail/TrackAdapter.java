@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.framgia.yen.mymusic.R;
 import com.framgia.yen.mymusic.data.model.Track;
@@ -25,16 +26,16 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
     private List<Track> mTracks;
     private Context mContext;
 
-    public TrackAdapter(Context context, List<Track> tracks) {
-        this.mTracks = tracks;
+    public TrackAdapter(Context context, TrackListener trackListener) {
         mContext = context;
+        mTrackListener = trackListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_genre_detail, null, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_track, null, false);
+        return new ViewHolder(view, mTracks, mTrackListener);
     }
 
     @Override
@@ -64,20 +65,27 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
         private TextView mTextViewDuration;
         private ImageButton mImageButtonOption;
         private Track mTrack;
+        private TrackListener mTrackListener;
+        private List<Track> mTracks;
+        private Context mContext;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView, List<Track> tracks, TrackListener trackListener) {
             super(itemView);
+            this.mTrackListener = trackListener;
+            this.mTracks = tracks;
+            this.mContext = itemView.getContext();
             mImageViewTrack = itemView.findViewById(R.id.image_track);
             mTextViewArtist = itemView.findViewById(R.id.text_artist);
             mTextViewTitle = itemView.findViewById(R.id.text_title);
             mTextViewDuration = itemView.findViewById(R.id.text_duration);
             mImageButtonOption = itemView.findViewById(R.id.button_option);
 
+            itemView.setOnClickListener(this);
             mImageButtonOption.setOnClickListener(this);
             mImageViewTrack.setOnClickListener(this);
         }
 
-        public void bindData(int position) {
+        private void bindData(int position) {
             if (mTracks == null) return;
             mTrack = mTracks.get(position);
             Glide.with(mImageViewTrack).load(mTrack.getArtWorkUrl()).into(mImageViewTrack);
@@ -89,13 +97,23 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.image_track:
-                    //TODO
-                    break;
                 case R.id.button_option:
                     handleOption();
                     break;
+                case R.id.image_track:
+                    handlePlayTrack();
+                    break;
+                case R.id.item_track:
+                    handlePlayTrack();
+                    break;
+                default:
+                    handlePlayTrack();
+                    break;
             }
+        }
+
+        private void handlePlayTrack() {
+            mTrackListener.onPlayTrack(getAdapterPosition(), mTracks);
         }
 
         private void handleOption() {

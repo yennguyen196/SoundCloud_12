@@ -15,6 +15,7 @@ import com.framgia.yen.mymusic.data.source.TrackDataSource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     private static final String QUERY_DIRECTORY_NAME = "%SoundCloud12%";
@@ -121,8 +122,6 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
 
     @Override
     public List<Track> getTracksFavorite() {
-        //TODO
-        return null;
     }
 
     @Override
@@ -167,5 +166,14 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
             cursor.moveToNext();
         }
         return tracks;
+    }
+    private Track getTrackFromCursor(Cursor cursor){
+        Track track = new Track();
+        track.setId(cursor.getInt(cursor.getColumnIndex(Track.TrackEntity.ID)));
+        track.setTitle(cursor.getString(cursor.getColumnIndex(Track.TrackEntity.TITLE)));
+        track.setArtist(cursor.getString(cursor.getColumnIndex(Track.TrackEntity.ARTIST)));
+        track.setArtWorkUrl(String.valueOf(cursor.getInt(cursor.getColumnIndex(Track.TrackEntity.ARTWORK_URL))));
+        track.setDuration(cursor.getInt(cursor.getColumnIndex(Track.TrackEntity.DURATION)));
+        return track;
     }
 }

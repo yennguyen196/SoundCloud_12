@@ -9,8 +9,9 @@ import java.util.List;
 public class GenreDetailPresenter implements GenreDetailContract.Presenter, OnFetchDataListener<Track> {
     private GenreDetailContract.View mView;
     private TrackRepository mTrackRepository;
+    private OnFetchDataListener<Track> mListener;
 
-    public GenreDetailPresenter(GenreDetailContract.View view, TrackRepository trackRepository){
+    public GenreDetailPresenter(GenreDetailContract.View view, TrackRepository trackRepository) {
         this.mView = view;
         this.mTrackRepository = trackRepository;
     }
@@ -21,8 +22,18 @@ public class GenreDetailPresenter implements GenreDetailContract.Presenter, OnFe
     }
 
     @Override
+    public void dowloadTrack(Track track) {
+        mTrackRepository.getTrackLocal(mListener);
+    }
+
+    @Override
+    public void addFavorite(Track track) {
+        mTrackRepository.addTrackToFavorite(track);
+    }
+
+    @Override
     public void onFetchDataSuccess(List<Track> data) {
-        if(data.isEmpty()){
+        if (data.isEmpty()) {
             mView.noTrackAvailable();
         } else {
             mView.showTracks(data);

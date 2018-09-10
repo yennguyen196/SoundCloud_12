@@ -20,6 +20,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     private List<Genre> genres;
     private Context mContext;
     private OnGenreClickListener mListener;
+    private Genre mGenre;
     private static final int WIDTH = 200;
     private static final int HEIGHT = 200;
 
@@ -46,7 +47,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
         return genres != null ? genres.size() : 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageViewGenre;
         private TextView mTextViewGenre;
 
@@ -54,22 +55,22 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
             super(view);
             mImageViewGenre = view.findViewById(R.id.image_genre);
             mTextViewGenre = view.findViewById(R.id.text_genre);
+            mImageViewGenre.setOnClickListener(this);
         }
 
         private void bindView(final Genre genre, final OnGenreClickListener listener) {
-            mTextViewGenre.setText(genre.getName());
+            mTextViewGenre.setText(genre.getName().replace(mContext.getString(com.framgia.yen.mymusic.R.string.hyphen)," "));
             Glide.with(mImageViewGenre)
                     .load(genre.getImageResource())
                     .apply(new RequestOptions().override(WIDTH, HEIGHT)
                             .placeholder(R.drawable.ic_launcher_background)
                             .error(R.drawable.ic_launcher_background))
                     .into(mImageViewGenre);
-            mImageViewGenre.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.gotoDetailFragment(genre.getName());
-                }
-            });
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.gotoDetailFragment(mGenre.getName().trim());
         }
     }
 
@@ -85,5 +86,4 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     interface OnGenreClickListener {
         void gotoDetailFragment(String genre);
     }
-
 }
