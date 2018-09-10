@@ -30,6 +30,10 @@ public class TrackRepository implements TrackDataSource.LocalDataSource, TrackDa
 
     @Override
     public void getTrackLocal(TrackDataSource.OnFetchDataListener<Track> listener) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> update download screen
             mLocalDataSource.getTrackLocal(listener);
     }
 

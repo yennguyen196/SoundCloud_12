@@ -30,6 +30,7 @@ public class FavoriteFragment extends Fragment implements FavoriteContract.View 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         return view;
     }
